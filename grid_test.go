@@ -31,10 +31,10 @@ func TestBuildGrid(t *testing.T) {
 
 func TestFindEntries(t *testing.T) {
 	grid := strings.NewReader(sampleGridCard)
-	input := "[A3] [D1] [G4]"
+	input := "[A3] [D5] [G4]"
 	foundEntries := FindEntries(grid, input)
-	if "314" != foundEntries {
-		t.Errorf("Entries %v did not match 314", foundEntries)
+	if "354" != foundEntries {
+		t.Errorf("Entries %v did not match 354", foundEntries)
 	}
 }
 
@@ -50,6 +50,24 @@ func TestFindEntriesForEmptyGrid(t *testing.T) {
 func TestFindEntriesForOutOfBoundsInput(t *testing.T) {
 	grid := strings.NewReader(sampleGridCard)
 	input := "[A3] [D5] [G6]"
+	foundEntries := FindEntries(grid, input)
+	if "" != foundEntries {
+		t.Errorf("Expected empty found entries")
+	}
+}
+
+func TestFindEntriesForMalFormedInput(t *testing.T) {
+	grid := strings.NewReader(sampleGridCard)
+	input := "[AA] [D5] [G6]"
+	foundEntries := FindEntries(grid, input)
+	if "" != foundEntries {
+		t.Errorf("Expected empty found entries")
+	}
+}
+
+func TestFindEntriesForNotFoundINput(t *testing.T) {
+	grid := strings.NewReader(sampleGridCard)
+	input := "[X3] [D5] [G6]"
 	foundEntries := FindEntries(grid, input)
 	if "" != foundEntries {
 		t.Errorf("Expected empty found entries")
