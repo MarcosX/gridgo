@@ -30,7 +30,10 @@ func FindEntries(gridInput io.Reader, input string) string {
 	for _, entryInput := range strings.Fields(input) {
 		entryData := strings.Split(entryInput, "")
 		gridRow := grid[entryData[1]]
-		gridColumn, _ := strconv.ParseInt(entryData[2], 16, 32)
+		gridColumn, _ := strconv.Atoi(entryData[2])
+		if len(gridRow) < gridColumn {
+			return ""
+		}
 		output = output + gridRow[gridColumn-1]
 	}
 	return output

@@ -38,9 +38,18 @@ func TestFindEntries(t *testing.T) {
 	}
 }
 
-func TestFindEntriesForEmptyInput(t *testing.T) {
+func TestFindEntriesForEmptyGrid(t *testing.T) {
 	grid := strings.NewReader("")
 	input := "[A3] [D1] [G4]"
+	foundEntries := FindEntries(grid, input)
+	if "" != foundEntries {
+		t.Errorf("Expected empty found entries")
+	}
+}
+
+func TestFindEntriesForOutOfBoundsInput(t *testing.T) {
+	grid := strings.NewReader(sampleGridCard)
+	input := "[A3] [D5] [G6]"
 	foundEntries := FindEntries(grid, input)
 	if "" != foundEntries {
 		t.Errorf("Expected empty found entries")
