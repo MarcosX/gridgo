@@ -1,6 +1,7 @@
 package main
 
 import (
+	"os"
 	"strings"
 	"testing"
 )
@@ -87,4 +88,13 @@ func TestConfigureGrid(t *testing.T) {
 	if len(grid["A"]) != 5 {
 		t.Errorf("Expected grid entries to have 5 chars")
 	}
+}
+
+func Example() {
+	oldArgs := os.Args
+	defer func() { os.Args = oldArgs }()
+	os.Args = []string{"", "[A3] [D5] [G2]"}
+	main()
+	// Output:
+	// 352
 }

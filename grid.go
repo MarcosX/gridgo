@@ -54,7 +54,11 @@ func ConfigureGrid(input []string) map[string][]string {
 }
 
 func main() {
-	reader := bufio.NewReader(os.Stdin)
-	text, _ := reader.ReadString('\n')
-	fmt.Print(text)
+	gridFile, err := os.Open("grid.txt")
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(FindEntries(gridFile, os.Args[1]))
+	// reader := bufio.NewReader(os.Stdin)
+	// text, _ := reader.ReadString('\n')
 }
