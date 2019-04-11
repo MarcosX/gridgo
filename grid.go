@@ -2,7 +2,9 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"io"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -40,4 +42,19 @@ func FindEntries(gridInput io.Reader, input string) string {
 		output = output + gridRow[gridColumn-1]
 	}
 	return output
+}
+
+func ConfigureGrid(input []string) map[string][]string {
+	grid := make(map[string][]string)
+	gridRows := []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"}
+	for rowIndex, row := range gridRows {
+		grid[row] = strings.Split(input[rowIndex], " ")
+	}
+	return grid
+}
+
+func main() {
+	reader := bufio.NewReader(os.Stdin)
+	text, _ := reader.ReadString('\n')
+	fmt.Print(text)
 }
