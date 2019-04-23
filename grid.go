@@ -9,6 +9,8 @@ import (
 	"strings"
 )
 
+const defaultFileName = "grid.txt"
+
 func buildGrid(gridInput io.Reader) map[string][]string {
 	scanner := bufio.NewScanner(gridInput)
 	grid := make(map[string][]string)
@@ -23,6 +25,7 @@ func buildGrid(gridInput io.Reader) map[string][]string {
 	return grid
 }
 
+// Searches on the reader for entries as in a two dimensional matrix
 func FindEntries(gridInput io.Reader, input string) string {
 	output := ""
 	grid := buildGrid(gridInput)
@@ -44,6 +47,7 @@ func FindEntries(gridInput io.Reader, input string) string {
 	return output
 }
 
+// Saves the grid configuration into a known formated file
 func ConfigureGrid(input []string) map[string][]string {
 	grid := make(map[string][]string)
 	gridRows := []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"}
@@ -54,11 +58,17 @@ func ConfigureGrid(input []string) map[string][]string {
 }
 
 func main() {
-	gridFile, err := os.Open("grid.txt")
+	fileName := defaultFileName
+	input := os.Args[1]
+	if os.Args[1] == "-f" {
+		fileName = os.Args[2]
+		input = os.Args[3]
+	}
+	gridFile, err := os.Open(fileName)
 	if err != nil {
 		panic(err)
 	}
-	fmt.Println(FindEntries(gridFile, os.Args[1]))
+	fmt.Println(FindEntries(gridFile, input))
 	// reader := bufio.NewReader(os.Stdin)
 	// text, _ := reader.ReadString('\n')
 }

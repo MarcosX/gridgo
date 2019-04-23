@@ -90,10 +90,19 @@ func TestConfigureGrid(t *testing.T) {
 	}
 }
 
-func Example() {
+func ExampleReadingInputWithDefaultFile() {
 	oldArgs := os.Args
 	defer func() { os.Args = oldArgs }()
 	os.Args = []string{"", "[A3] [D5] [G2]"}
+	main()
+	// Output:
+	// J0V
+}
+
+func ExampleReadingInputWithCustomFile() {
+	oldArgs := os.Args
+	defer func() { os.Args = oldArgs }()
+	os.Args = []string{"", "-f", "sample_grid.txt", "[A3] [D5] [G2]"}
 	main()
 	// Output:
 	// 352
