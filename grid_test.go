@@ -33,46 +33,51 @@ func TestBuildGrid(t *testing.T) {
 func TestFindEntries(t *testing.T) {
 	grid := strings.NewReader(sampleGridCard)
 	input := "[A3] [D5] [G4]"
-	foundEntries, _ := FindEntries(grid, input)
-	if "354" != foundEntries {
-		t.Errorf("Entries %v did not match 354", foundEntries)
+	foundEntries, err := FindEntries(grid, input)
+	if "354" == foundEntries && err == nil {
+		return
 	}
+	t.Errorf("Entries %v did not match 354", foundEntries)
 }
 
 func TestFindEntriesForEmptyGrid(t *testing.T) {
 	grid := strings.NewReader("")
 	input := "[A3] [D1] [G4]"
-	foundEntries, _ := FindEntries(grid, input)
-	if "" != foundEntries {
-		t.Errorf("Expected empty found entries")
+	foundEntries, err := FindEntries(grid, input)
+	if "" == foundEntries && err != nil {
+		return
 	}
+	t.Errorf("Expected empty entries with an error")
 }
 
 func TestFindEntriesForOutOfBoundsInput(t *testing.T) {
 	grid := strings.NewReader(sampleGridCard)
 	input := "[A3] [D5] [G6]"
-	foundEntries, _ := FindEntries(grid, input)
-	if "" != foundEntries {
-		t.Errorf("Expected empty found entries")
+	foundEntries, err := FindEntries(grid, input)
+	if "" == foundEntries && err != nil {
+		return
 	}
+	t.Errorf("Expected empty entries with an error")
 }
 
 func TestFindEntriesForMalFormedInput(t *testing.T) {
 	grid := strings.NewReader(sampleGridCard)
 	input := "[AA] [D5] [G6]"
-	foundEntries, _ := FindEntries(grid, input)
-	if "" != foundEntries {
-		t.Errorf("Expected empty found entries")
+	foundEntries, err := FindEntries(grid, input)
+	if "" == foundEntries && err != nil {
+		return
 	}
+	t.Errorf("Expected empty entries with an error")
 }
 
 func TestFindEntriesForNotFoundINput(t *testing.T) {
 	grid := strings.NewReader(sampleGridCard)
 	input := "[X3] [D5] [G6]"
-	foundEntries, _ := FindEntries(grid, input)
-	if "" != foundEntries {
-		t.Errorf("Expected empty found entries")
+	foundEntries, err := FindEntries(grid, input)
+	if "" == foundEntries && err != nil {
+		return
 	}
+	t.Errorf("Expected empty entries with an error")
 }
 
 func TestConfigureGrid(t *testing.T) {
