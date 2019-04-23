@@ -2,6 +2,7 @@ package main
 
 import (
 	"bufio"
+	"errors"
 	"fmt"
 	"io"
 	"os"
@@ -26,25 +27,25 @@ func buildGrid(gridInput io.Reader) map[string][]string {
 }
 
 // Searches on the reader for entries as in a two dimensional matrix
-func FindEntries(gridInput io.Reader, input string) string {
+func FindEntries(gridInput io.Reader, input string) (string, error) {
 	output := ""
 	grid := buildGrid(gridInput)
 	if len(grid) == 0 {
-		return ""
+		return "", errors.New("Could not read grid values")
 	}
 	for _, entryInput := range strings.Fields(input) {
 		entryData := strings.Split(entryInput, "")
 		gridRow := grid[entryData[1]]
 		gridColumn, err := strconv.Atoi(entryData[2])
 		if err != nil {
-			return ""
+			return "", errors.New("Could not parse input to valid integer")
 		}
 		if len(gridRow) < gridColumn {
-			return ""
+			return "", errors.New("Input value is not valid")
 		}
 		output = output + gridRow[gridColumn-1]
 	}
-	return output
+	return output, nil
 }
 
 // Saves the grid configuration into a known formated file
@@ -66,9 +67,15 @@ func main() {
 	}
 	gridFile, err := os.Open(fileName)
 	if err != nil {
-		panic(err)
+		fmt.Println(err)
+		// os.Exit(1) does not work well with Example type tests
 	}
-	fmt.Println(FindEntries(gridFile, input))
+	output, err := FindEntries(gridFile, input)
+	if err != nil {
+		fmt.Println(err)
+		//os.Exit(1) does not work well with Example typ tests
+	}
+	fmt.Println(output)
 	// reader := bufio.NewReader(os.Stdin)
 	// text, _ := reader.ReadString('\n')
 }
