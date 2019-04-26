@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"io"
 	"os"
+	"regexp"
 	"strconv"
 	"strings"
 )
@@ -48,17 +49,34 @@ func FindEntries(gridInput io.Reader, input string) (string, error) {
 	return output, nil
 }
 
-// Saves the grid configuration into a known formated file
-func ConfigureGrid(input []string) map[string][]string {
-	grid := make(map[string][]string)
-	gridRows := []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"}
-	for rowIndex, row := range gridRows {
-		grid[row] = strings.Split(input[rowIndex], " ")
-	}
-	return grid
-}
-
 func main() {
+	if os.Args[1] == "configure" {
+		gridFile := "grid.txt"
+		if os.Args[2] == "-f" {
+			gridFile = os.Args[3]
+		}
+		reader := bufio.NewReader(os.Stdin)
+		re := regexp.MustCompile(".,.,.,.,.")
+		fmt.Println("Values must be separated by a comma, like A: 1,2,3,4,5")
+		gridRows := []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"}
+		file, err := os.Create(gridFile)
+		if err != nil {
+			fmt.Println("Cannot create file "+gridFile, err)
+		}
+		defer file.Close()
+
+		for _, row := range gridRows {
+			fmt.Print(row + ": ")
+			text, _ := reader.ReadString('\n')
+			match := re.FindStringSubmatch(text)
+			if len(match) == 0 {
+				fmt.Println("invalid input")
+				return
+			}
+			fmt.Fprintf(file, row+","+text)
+		}
+		return
+	}
 	fileName := defaultFileName
 	input := os.Args[1]
 	if os.Args[1] == "-f" {
@@ -76,6 +94,4 @@ func main() {
 		//os.Exit(1) does not work well with Example typ tests
 	}
 	fmt.Println(output)
-	// reader := bufio.NewReader(os.Stdin)
-	// text, _ := reader.ReadString('\n')
 }

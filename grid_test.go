@@ -80,21 +80,6 @@ func TestFindEntriesForNotFoundINput(t *testing.T) {
 	t.Errorf("Expected empty entries with an error")
 }
 
-func TestConfigureGrid(t *testing.T) {
-	input := []string{"1 2 3 4 5", "1 2 3 4 5",
-		"1 2 3 4 5", "1 2 3 4 5", "1 2 3 4 5",
-		"1 2 3 4 5", "1 2 3 4 5", "1 2 3 4 5",
-		"1 2 3 4 5", "1 2 3 4 5"}
-
-	grid := ConfigureGrid(input)
-	if len(grid) != 10 {
-		t.Errorf("Expected 10 entries for the grid")
-	}
-	if len(grid["A"]) != 5 {
-		t.Errorf("Expected grid entries to have 5 chars")
-	}
-}
-
 func ExampleReadingInputWithDefaultFile() {
 	oldArgs := os.Args
 	defer func() { os.Args = oldArgs }()
