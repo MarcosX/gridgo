@@ -1,3 +1,5 @@
+[![CircleCI](https://circleci.com/gh/MarcosX/gridgo.svg?style=svg)](https://circleci.com/gh/MarcosX/gridgo)
+
 # gridgo
 2FA grid based reader
 
