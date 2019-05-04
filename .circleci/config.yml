@@ -9,12 +9,6 @@ jobs:
       - run:
           name: Run unit tests
           command: go test
-      - run:
-          name: Build binary
-          command: go build
-      - save_cache:
-          key: go_build_$CIRCLE_SHA1
-          paths: gridgo
   smoke-tests:
     docker:
       - image: circleci/ruby:2.6.3
@@ -25,8 +19,9 @@ jobs:
           command: |
             gem install --no-document inspec
             gem install --no-document inspec-bin
-      - restore_cache:
-          key: go_build_$CIRCLE_SHA1
+      - run:
+          name: Build binary
+          command: go build
       - run:
           name: Run smoke tests
           command: echo "yes" | inspec exec test/smoke/gridgo.rb
