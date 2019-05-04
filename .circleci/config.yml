@@ -30,4 +30,6 @@ workflows:
   dev-master:
     jobs:
       - build
-      - smoke-tests
+      - smoke-tests:
+          requires:
+            - build
