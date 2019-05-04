@@ -20,7 +20,7 @@ jobs:
       - image: chef/inspec:4.3.5
     steps:
       - restore_cache:
-          key: go_build_{{ $CIRCLE_SHA1 }}
+          key: go_build_$CIRCLE_SHA1
       - run:
           name: Run smoke tests
           command: inspec exec tests/smoke/gridgo.rb
