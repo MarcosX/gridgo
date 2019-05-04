@@ -17,8 +17,13 @@ jobs:
           paths: gridgo
   smoke-tests:
     docker:
-      - image: chef/inspec:4.3.5
+      - image: circleci/ruby:2.6.3
     steps:
+      - run:
+          name: Install inspec
+          command: |
+            gem install --no-document inspec
+            gem install --no-document inspec-bin
       - restore_cache:
           key: go_build_$CIRCLE_SHA1
       - run:
