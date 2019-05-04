@@ -19,6 +19,7 @@ jobs:
     docker:
       - image: circleci/ruby:2.6.3
     steps:
+      - checkout
       - run:
           name: Install inspec
           command: |
@@ -28,7 +29,7 @@ jobs:
           key: go_build_$CIRCLE_SHA1
       - run:
           name: Run smoke tests
-          command: echo yes | inspec exec test/smoke/gridgo.rb
+          command: echo "yes" | inspec exec test/smoke/gridgo.rb
 
 workflows:
   version: 2
