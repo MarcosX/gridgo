@@ -28,7 +28,7 @@ jobs:
           key: go_build_$CIRCLE_SHA1
       - run:
           name: Run smoke tests
-          command: inspec exec tests/smoke/gridgo.rb
+          command: echo yes | inspec exec tests/smoke/gridgo.rb
 
 workflows:
   version: 2
