@@ -1,0 +1,10 @@
+A,P,H,J,0,X
+B,V,W,6,P,8
+C,7,J,D,N,0
+D,K,J,1,D,0
+E,T,C,P,6,5
+F,W,P,0,7,D
+G,0,V,7,X,3
+H,F,R,3,P,Q
+I,E,0,H,K,K
+J,H,Y,R,X,R

@@ -86,7 +86,7 @@ func ExampleReadingInputWithDefaultFile() {
 	os.Args = []string{"", "[A3] [D5] [G2]"}
 	main()
 	// Output:
-	// J0V
+	// 2CA
 }
 
 func ExampleReadingInputWithCustomFile() {
@@ -104,5 +104,5 @@ func ExampleMalformedInput() {
 	os.Args = []string{"", "not", "valid", "arg"}
 	main()
 	// Output:
-	// Could not parse input to valid integer
+	// Could not parse input t to valid integer
 }

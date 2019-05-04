@@ -1,15 +1,32 @@
 version: 2.1
 
 jobs:
-  test:
+  build:
     docker:
       - image: circleci/golang:1.12
     steps:
       - checkout
-      - run: go test
+      - run:
+          name: Run unit tests
+          command: go test
+      - run:
+          name: Build binary
+          command: go build
+      - save_cache:
+          key: go_build_{{ $CIRCLE_SHA1 }}
+          paths: gridgo
+  smoke-tests:
+    docker:
+      - image: chef/inspec:4.3.5
+    steps:
+      - restore_cache:
+          key: go_build_{{ $CIRCLE_SHA1 }}
+      - run:
+          name: Run smoke tests
+          command: inspec exec tests/smoke/gridgo.rb
 
 workflows:
   version: 2
   dev-master:
     jobs:
-      - test
+      - build

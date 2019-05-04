@@ -39,7 +39,7 @@ func FindEntries(gridInput io.Reader, input string) (string, error) {
 		gridRow := grid[entryData[1]]
 		gridColumn, err := strconv.Atoi(entryData[2])
 		if err != nil {
-			return "", errors.New("Could not parse input to valid integer")
+			return "", errors.New("Could not parse input " + entryData[2] + " to valid integer")
 		}
 		if len(gridRow) < gridColumn {
 			return "", errors.New("Input value is not valid")
@@ -51,26 +51,27 @@ func FindEntries(gridInput io.Reader, input string) (string, error) {
 
 func main() {
 	if os.Args[1] == "configure" {
+		gridRows := []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"}
+
 		gridFile := "grid.txt"
 		if os.Args[2] == "-f" {
 			gridFile = os.Args[3]
 		}
-		reader := bufio.NewReader(os.Stdin)
-		re := regexp.MustCompile(".,.,.,.,.")
-		fmt.Println("Values must be separated by a comma, like A: 1,2,3,4,5")
-		gridRows := []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"}
 		file, err := os.Create(gridFile)
 		if err != nil {
 			fmt.Println("Cannot create file "+gridFile, err)
 		}
 		defer file.Close()
 
+		re := regexp.MustCompile(".,.,.,.,.")
+		reader := bufio.NewReader(os.Stdin)
 		for _, row := range gridRows {
 			fmt.Print(row + ": ")
 			text, _ := reader.ReadString('\n')
 			match := re.FindStringSubmatch(text)
 			if len(match) == 0 {
-				fmt.Println("invalid input")
+				fmt.Println("Values must be separated by a comma, like A: 1,2,3,4,5")
+				fmt.Println("invalid input " + text)
 				return
 			}
 			fmt.Fprintf(file, row+","+text)
