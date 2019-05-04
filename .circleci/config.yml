@@ -13,7 +13,7 @@ jobs:
           name: Build binary
           command: go build
       - save_cache:
-          key: go_build_{{ $CIRCLE_SHA1 }}
+          key: go_build_$CIRCLE_SHA1
           paths: gridgo
   smoke-tests:
     docker:
