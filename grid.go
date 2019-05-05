@@ -3,10 +3,7 @@ package main
 import (
 	"bufio"
 	"errors"
-	"fmt"
 	"io"
-	"os"
-	"regexp"
 	"strconv"
 	"strings"
 )
@@ -47,54 +44,4 @@ func FindEntries(gridInput io.Reader, input string) (string, error) {
 		output = output + gridRow[gridColumn-1]
 	}
 	return output, nil
-}
-
-func main() {
-	if os.Args[1] == "configure" {
-		gridRows := []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"}
-
-		gridFile := defaultFileName
-		if len(os.Args) >= 2 && os.Args[2] == "-f" {
-			gridFile = os.Args[3]
-		}
-		file, err := os.Create(gridFile)
-		if err != nil {
-			fmt.Println("Cannot create file "+gridFile, err)
-		}
-		defer file.Close()
-
-		re := regexp.MustCompile(".,.,.,.,.")
-		reader := bufio.NewReader(os.Stdin)
-		for _, row := range gridRows {
-			fmt.Print(row + ": ")
-			text, _ := reader.ReadString('\n')
-			match := re.FindStringSubmatch(text)
-			if len(match) == 0 {
-				fmt.Println("Values must be separated by a comma, like A: 1,2,3,4,5")
-				fmt.Println("invalid input " + text)
-				return
-			}
-			fmt.Fprintf(file, row+","+text)
-		}
-		return
-	}
-	fileName := defaultFileName
-	input := os.Args[1]
-	if os.Args[1] == "-f" {
-		fileName = os.Args[2]
-		input = os.Args[3]
-	}
-	gridFile, err := os.Open(fileName)
-	if err != nil {
-		fmt.Println(err)
-		// os.Exit(1) does not work well with Example type tests
-		return
-	}
-	output, err := FindEntries(gridFile, input)
-	if err != nil {
-		fmt.Println(err)
-		//os.Exit(1) does not work well with Example typ tests
-		return
-	}
-	fmt.Println(output)
 }
