@@ -53,8 +53,8 @@ func main() {
 	if os.Args[1] == "configure" {
 		gridRows := []string{"A", "B", "C", "D", "E", "F", "G", "H", "I", "J"}
 
-		gridFile := "grid.txt"
-		if os.Args[2] == "-f" {
+		gridFile := defaultFileName
+		if len(os.Args) >= 2 && os.Args[2] == "-f" {
 			gridFile = os.Args[3]
 		}
 		file, err := os.Create(gridFile)
@@ -88,11 +88,13 @@ func main() {
 	if err != nil {
 		fmt.Println(err)
 		// os.Exit(1) does not work well with Example type tests
+		return
 	}
 	output, err := FindEntries(gridFile, input)
 	if err != nil {
 		fmt.Println(err)
 		//os.Exit(1) does not work well with Example typ tests
+		return
 	}
 	fmt.Println(output)
 }

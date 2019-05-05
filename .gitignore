@@ -10,3 +10,9 @@
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 *.out
+
+# Binaries and generated files
+gridgo
+gridgo.test
+grid.txt
+another_grid.txt

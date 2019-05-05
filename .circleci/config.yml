@@ -11,7 +11,7 @@ jobs:
           command: go test
       - run:
           name: Build binary
-          command: go build
+          command: go build -o gridgo
       - save_cache:
           key: gogrid_binary_{{ .BuildNum }}
           paths: gridgo
