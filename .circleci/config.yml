@@ -13,7 +13,7 @@ jobs:
           name: Build binary
           command: go build -o gridgo
       - save_cache:
-          key: gogrid_binary_{{ .BuildNum }}
+          key: gogrid_binary_{{ .Environment.CIRCLE_SHA1 }}
           paths: gridgo
   smoke-tests:
     docker:
@@ -26,8 +26,7 @@ jobs:
             gem install --no-document inspec
             gem install --no-document inspec-bin
       - restore_cache:
-          keys:
-            - gogrid_binary_{{ .BuildNum }}
+          key: gogrid_binary_{{ .Environment.CIRCLE_SHA1 }}
       - run:
           name: Run smoke tests
           command: echo "yes" | inspec exec test/smoke/gridgo.rb
