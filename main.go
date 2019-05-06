@@ -46,13 +46,11 @@ func read() {
 	gridFile, err := os.Open(fileName)
 	if err != nil {
 		fmt.Println(err)
-		// os.Exit(1) does not work well with Example type tests
 		return
 	}
 	output, err := FindEntries(gridFile, input)
 	if err != nil {
 		fmt.Println(err)
-		//os.Exit(1) does not work well with Example typ tests
 		return
 	}
 	fmt.Println(output)
