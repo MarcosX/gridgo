@@ -32,3 +32,9 @@ describe command('./gridgo -f sample_grid.txt "[A3] [D5] [G2]"') do
   its('stderr') { should cmp '' }
   its('stdout') { should match '352'}
 end
+
+describe command('./gridgo -f invalid_grid.txt "[A3] [D5] [G2]"') do
+  its('exit_status') { should eq 0 }
+  its('stderr') { should cmp '' }
+  its('stdout') { should match 'Could not read grid values'}
+end

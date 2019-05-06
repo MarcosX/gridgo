@@ -19,15 +19,28 @@ I,1,2,3,4,5
 J,1,2,3,4,5
 `
 
+const invalidGridCard = `
+A,12345
+`
+
 func TestBuildGrid(t *testing.T) {
 	gridInput := strings.NewReader(sampleGridCard)
-	grid := buildGrid(gridInput)
+	grid, _ := buildGrid(gridInput)
 	if len(grid) != 10 {
 		t.Errorf("Grid size is not 10")
 	}
 	if len(grid["A"]) != 5 {
 		t.Errorf("Entry size on grid is not 5")
 	}
+}
+
+func TestBuildInvalidGrid(t *testing.T) {
+	gridInput := strings.NewReader(invalidGridCard)
+	_, err := buildGrid(gridInput)
+	if err != nil {
+		return
+	}
+	t.Errorf("Expected error to be returned")
 }
 
 func TestFindEntries(t *testing.T) {
@@ -114,4 +127,13 @@ func ExampleNumberOutOfRange() {
 	main()
 	// Output:
 	// Input value [A7] is not valid
+}
+
+func ExampleInvalidGridFile() {
+	oldArgs := os.Args
+	defer func() { os.Args = oldArgs }()
+	os.Args = []string{"", "-f", "invalid_grid.txt", "[A1] [D5] [G2]"}
+	main()
+	// Output:
+	// Could not read grid values
 }
