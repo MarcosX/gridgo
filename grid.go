@@ -10,8 +10,8 @@ import (
 
 const defaultFileName = "grid.txt"
 
-func buildGrid(gridInput io.Reader) map[string][]string {
-	scanner := bufio.NewScanner(gridInput)
+func buildGrid(gridFile io.Reader) map[string][]string {
+	scanner := bufio.NewScanner(gridFile)
 	grid := make(map[string][]string)
 	for scanner.Scan() {
 		line := scanner.Text()
@@ -25,23 +25,23 @@ func buildGrid(gridInput io.Reader) map[string][]string {
 }
 
 // Searches on the reader for entries as in a two dimensional matrix
-func FindEntries(gridInput io.Reader, input string) (string, error) {
+func FindEntries(gridFile io.Reader, rawInput string) (string, error) {
 	output := ""
-	grid := buildGrid(gridInput)
+	grid := buildGrid(gridFile)
 	if len(grid) == 0 {
 		return "", errors.New("Could not read grid values")
 	}
-	for _, entryInput := range strings.Fields(input) {
-		entryData := strings.Split(entryInput, "")
-		gridRow := grid[entryData[1]]
-		gridColumn, err := strconv.Atoi(entryData[2])
+	for _, singleInput := range strings.Fields(rawInput) {
+		singleInputChars := strings.Split(singleInput, "")
+		gridRow := grid[singleInputChars[1]]
+		gridColumnIndex, err := strconv.Atoi(singleInputChars[2])
 		if err != nil {
-			return "", errors.New("Could not parse input " + entryData[2] + " to valid integer")
+			return "", errors.New("Could not parse input " + singleInput + " to valid grid entry")
 		}
-		if len(gridRow) < gridColumn {
-			return "", errors.New("Input value is not valid")
+		if len(gridRow) < gridColumnIndex {
+			return "", errors.New("Input value " + singleInput + " is not valid")
 		}
-		output = output + gridRow[gridColumn-1]
+		output = output + gridRow[gridColumnIndex-1]
 	}
 	return output, nil
 }

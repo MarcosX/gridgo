@@ -104,5 +104,14 @@ func ExampleMalformedInput() {
 	os.Args = []string{"", "not", "valid", "arg"}
 	main()
 	// Output:
-	// Could not parse input t to valid integer
+	// Could not parse input not to valid grid entry
+}
+
+func ExampleNumberOutOfRange() {
+	oldArgs := os.Args
+	defer func() { os.Args = oldArgs }()
+	os.Args = []string{"", "[A7] [D5] [G2]"}
+	main()
+	// Output:
+	// Input value [A7] is not valid
 }
