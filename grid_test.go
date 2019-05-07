@@ -105,7 +105,7 @@ func ExampleReadingInputWithDefaultFile() {
 func ExampleReadingInputWithCustomFile() {
 	oldArgs := os.Args
 	defer func() { os.Args = oldArgs }()
-	os.Args = []string{"", "-f", "sample_grid.txt", "[A3] [D5] [G2]"}
+	os.Args = []string{"", "-f", "test/fixtures/sample_grid.txt", "[A3] [D5] [G2]"}
 	main()
 	// Output:
 	// 352
@@ -132,7 +132,7 @@ func ExampleNumberOutOfRange() {
 func ExampleInvalidGridFile() {
 	oldArgs := os.Args
 	defer func() { os.Args = oldArgs }()
-	os.Args = []string{"", "-f", "invalid_grid.txt", "[A1] [D5] [G2]"}
+	os.Args = []string{"", "-f", "test/fixtures/invalid_grid.txt", "[A1] [D5] [G2]"}
 	main()
 	// Output:
 	// Could not read grid values

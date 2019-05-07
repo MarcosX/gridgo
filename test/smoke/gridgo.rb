@@ -12,12 +12,12 @@ describe file('grid.txt') do
   its('content') { should match 'A,1,A,2,B,C' }
 end
 
-describe command("echo \"#{CONFIG_INPUT}\" | ./gridgo configure -f another_grid.txt -") do
+describe command("echo \"#{CONFIG_INPUT}\" | ./gridgo configure -f test/fixtures/another_grid.txt -") do
   its('exit_status') { should eq 0 }
   its('stderr') { should cmp '' }
 end
 
-describe file('another_grid.txt') do
+describe file('test/fixtures/another_grid.txt') do
   its('content') { should match 'A,1,A,2,B,C' }
 end
 
@@ -27,13 +27,13 @@ describe command('./gridgo "[A3] [D5] [G2]"') do
   its('stdout') { should match '2CA'}
 end
 
-describe command('./gridgo -f sample_grid.txt "[A3] [D5] [G2]"') do
+describe command('./gridgo -f test/fixtures/sample_grid.txt "[A3] [D5] [G2]"') do
   its('exit_status') { should eq 0 }
   its('stderr') { should cmp '' }
   its('stdout') { should match '352'}
 end
 
-describe command('./gridgo -f invalid_grid.txt "[A3] [D5] [G2]"') do
+describe command('./gridgo -f test/fixtures/invalid_grid.txt "[A3] [D5] [G2]"') do
   its('exit_status') { should eq 0 }
   its('stderr') { should cmp '' }
   its('stdout') { should match 'Could not read grid values'}
